@@ -1,0 +1,54 @@
+class Solution
+{
+    private static final int[] dr = {-2, -1, 1, 2, 2, 1, -1, -2};
+    private static final int[] dc = {1, 2, 2, 1, -1, -2, -2, -1};
+
+    //Function to find out minimum steps Knight needs to reach target position.
+    public int minStepToReachTarget(int KnightPos[], int TargetPos[], int N)
+    {
+        // Code here
+        
+        int targetRow = N - TargetPos[1];
+        int targetCol = TargetPos[0]-1;
+        int startRow = N - KnightPos[1];
+        int startCol = KnightPos[0]-1;
+        
+        if (startRow == targetRow && startCol == targetCol) {
+            return 0;
+        }
+        
+        //using bfs
+        boolean[][] isVisited = new boolean[N][N];
+        
+        Queue<int[]> q = new LinkedList();
+        
+        q.add(new int[]{startRow,startCol,0}); //third ele is steps
+        isVisited[startRow][startCol] = true;
+        while(!q.isEmpty()){
+            int[] curr = q.remove();
+            int r = curr[0];
+            int c = curr[1];
+            int steps = curr[2];
+            
+            for(int i =0;i<8;i++){
+                int newRow = r+dr[i];
+                int newCol = c+dc[i];
+                if(newRow>=0 && newCol >=0 && newRow <N && newCol<N && !isVisited[newRow][newCol]){
+                    if(newRow == targetRow && newCol == targetCol){
+                        return steps+1;
+                    }
+                    isVisited[newRow][newCol] = true;
+                    q.add(new int[]{newRow,newCol,steps+1});
+                }
+                
+            }
+        }
+        return -1;
+        
+    }
+        
+    
+}
+
+//Time Complexity : O(N^2) becuase we are exploring whole board
+//Space Complexity : O(N^2) because of isValid variable
