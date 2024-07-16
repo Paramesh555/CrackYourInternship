@@ -1,0 +1,30 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int s = 0;
+        int e = nums.length - 1;
+        int i = 0;
+        
+        while (i <= e) {
+            if (nums[i] == 0) {
+                swap(i, s, nums);
+                s++;
+                i++; 
+            } else if (nums[i] == 2) {
+                swap(i, e, nums);
+                e--; 
+                // Don't increment i because we need to process the element swapped from the end
+            } else {
+                i++; 
+            }
+        }
+    }
+
+    private void swap(int i, int j, int[] nums) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+
+//time complexity : O(N)
+//space complexity : O(1)

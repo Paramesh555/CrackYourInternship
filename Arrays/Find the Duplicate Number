@@ -1,0 +1,35 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        //two ways using freq or using sort
+        //we will do with sort cycle sort
+        cycleSort(nums);
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] != i+1){
+                return nums[i];
+            }
+        }
+        return -1;
+    }
+
+    private void cycleSort(int[] nums){
+        int idx =0;
+        
+        while(idx< nums.length){
+            int correctIdx = nums[idx]-1;
+            if(nums[correctIdx] != nums[idx]){
+                swap(nums,correctIdx,idx);
+            }else{
+                idx++;
+            }
+        }
+    }
+
+    private void swap(int[] nums,int i,int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+
+//time complexity : O(N)
+//space complexity :O(1)
