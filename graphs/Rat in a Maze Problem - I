@@ -1,0 +1,62 @@
+
+
+// User function Template for Java
+
+// m is the given matrix and n is the order of matrix
+class Solution {
+    public static ArrayList<String> findPath(int[][] m, int n) {
+        // Your code here
+        
+        ArrayList<String> ans = new ArrayList();
+        if(m[n-1][n-1] == 0) return ans;
+        helper(m,0,0,ans,new StringBuilder());
+        return ans;
+        
+    }
+    
+    private static void helper(int[][] m,int i,int j,ArrayList<String> ans,StringBuilder sb){
+        int N = m.length;
+        if(i == N-1 && j == N-1){
+            StringBuilder temp = new StringBuilder(sb);
+            
+            ans.add(temp.toString());
+            return;
+        }
+        
+        if(m[i][j] == 0) return;
+        
+        
+        m[i][j] =0;
+        
+        
+        if(i+1 < N){
+            sb.append('D');
+            helper(m,i+1,j,ans,sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        
+        if(j-1 >=0){
+            sb.append('L');
+            helper(m,i,j-1,ans,sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        
+        if(j+1 < N){
+            
+            sb.append('R');
+            helper(m,i,j+1,ans,sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        
+        if(i-1 >= 0){
+            sb.append('U');
+            helper(m,i-1,j,ans,sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        m[i][j] =1;
+        
+    }
+}
+
+//time complexity : O(4^(m*n)) on every cell we will try 4 different operations
+//space complexity : O(m*n) reccursion tree

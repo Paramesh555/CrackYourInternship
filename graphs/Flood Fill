@@ -1,0 +1,21 @@
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        
+        int actual = image[sr][sc];
+        if(color == actual) return image;
+        helper(image,sr,sc,color,actual);
+        return image;
+    }
+
+    private void helper(int[][] image, int i, int j, int target,int actual){
+        if(i <0 || j<0 || i>=image.length || j>= image[0].length) return;
+        if(image[i][j] != actual) return;
+        image[i][j] = target;
+        helper(image,i+1,j,target,actual);
+        helper(image,i,j+1,target,actual);
+        helper(image,i-1,j,target,actual);
+        helper(image,i,j-1,target,actual);
+    }
+}
+time complexity : O(m*n)
+space complexity : O(m*n)

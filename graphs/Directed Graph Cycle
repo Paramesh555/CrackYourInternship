@@ -1,0 +1,35 @@
+class Solution {
+    // Function to detect cycle in a directed graph.
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        boolean[] isVisited = new boolean[V];
+        for(int i=0;i<V;i++){
+            
+            if(helper(adj,isVisited,new boolean[V],i)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    private boolean helper(ArrayList<ArrayList<Integer>> adj,boolean[] isVisited
+        ,boolean[] backTracking,int idx){
+        
+        if(backTracking[idx] == true){
+           return true;
+        }
+        if(isVisited[idx] == true) return false;
+        isVisited[idx] = true;
+        backTracking[idx] = true;
+        boolean hasCycle = false;
+        
+        for(int neighbor : adj.get(idx)){
+            hasCycle = hasCycle || helper(adj,isVisited,backTracking,neighbor);
+        }
+        backTracking[idx] = false;
+        return hasCycle;
+        
+    }
+}
+//time complexity:O(V+E)
+//space complexity : O(V)
